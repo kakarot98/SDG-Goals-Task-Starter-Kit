@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { YEARS } from "../../config";
+import {setYear} from '../redux/ducks/chartData'
 
 export default function Year() {
-  const [year, setYear] = useState(()=> { return 0});
+  const dispatch = useDispatch()
 
-  const handleYearChange = async (value) => {
+  //const [year, setYear] = useState(()=> { return 0});
+
+  const handleYearChange = (value) => {
     console.log(value)
-    isNaN(value) ? setYear(0) : setYear(value)
+    value ? dispatch(setYear(value)) : dispatch(setYear(undefined))
   }
 
   return (
@@ -14,9 +18,9 @@ export default function Year() {
       <select
         onChange={(e) => handleYearChange(e.target.value)}
       >
-        <option>Select Year</option>
-        {YEARS.map((goal) => (
-          <option value={goal}>{goal}</option>
+        <option value={''}>Select Year</option>
+        {YEARS.map((year) => (
+          <option value={year}>{year}</option>
         ))}
       </select>
     </div>
