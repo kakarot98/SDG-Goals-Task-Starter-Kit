@@ -2,30 +2,40 @@ import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { setChart } from "../redux/ducks/chartData";
 //import jsonData from '../../data/2018.json'
 
 export default function Chart() {
+  const dispatch = useDispatch()
   const [data, setData] = useState();
 
-  const [year, goal] = useSelector((state) => [
-    state.chartData.year,
-    state.chartData.goal,
-  ]);
+  // const [year, goal] = useSelector((state) => [
+  //   state.chartData.year,
+  //   state.chartData.goal,
+  // ]);
+  const year = useSelector(state => state.chartData.year)
+  const goal = useSelector(state => state.chartData. goal)
+  const chartDataValues = useSelector(state => state.chartData.chartDataValues)
+
+
 
   useEffect(() => {
-    const fetchData = async (year) => {
-      await axios
-        .get(`${year}.json`)
-        .then((res) => setData(res.data))
-        .then((res) => console.log(data))
-        .catch((err) => console.log(err));
-    };
     if (year && goal) {
-      fetchData(year);
+      console.log(year+goal)
+      const fetchData = async (year) => {
+        await axios.get(`${year}.json`).then(res => {
+          // const tempArrayOfObjects = res.data.map((e,i) => {return {area_name: e.area_name, value:(e.chartdata.filter(obj => obj.name === goal)[0].value)}})
+          dispatch(setChart(res.data.map((e,i) => {return {area_name: e.area_name, value:(e.chartdata.filter(obj => obj.name === goal)[0].value)}})))
+        }).catch(err => console.log(err))
+      }
+      fetchData(year)
     } else if (!year | !goal) {
-      setData(null);
+      setData(null)
     }
-  });
+
+
+    
+  }, [year, goal]);
 
   // useEffect(()=>{
   //  console.log(year)
