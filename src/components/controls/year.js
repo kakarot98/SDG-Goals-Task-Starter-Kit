@@ -20,7 +20,7 @@ export default function Year() {
       >
         <option value={''}>Select Year</option>
         {YEARS.map((year) => (
-          <option value={year}>{year}</option>
+          <option value={year} key={year}>{year}</option>
         ))}
       </select>
     </div>
