@@ -17,7 +17,7 @@ export default function Goal() {
       <select onChange={e => handleGoalChange(e.target.value)}>
         <option value={''}>Select Goal</option>
         {GOALS_LIST.map((goal) => (
-          <option value={goal}>{goal}</option>
+          <option value={goal.split(':').shift()}>{goal}</option>
         ))}
       </select>
     </div>

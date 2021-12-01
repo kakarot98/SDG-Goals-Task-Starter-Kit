@@ -22,11 +22,11 @@ const initialState = {
 export default (state=initialState, action) => {
     switch (action.type) {
         case SET_YEAR:
-            console.log(action.year)
+            // console.log(action.year)
             return action.year = undefined ? state : {...state, year: action.year}
 
         case SET_GOAL:
-            console.log(action.goal)
+            // console.log(action.goal)
             return action.goal = undefined ? state : {...state, goal: action.goal}
 
         default:
