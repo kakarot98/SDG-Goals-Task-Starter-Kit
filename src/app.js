@@ -1,16 +1,16 @@
 import "./app.css";
-import Goal from "./components/controls/goal";
-import Year from "./components/controls/year";
 import Chart from "./components/chart";
 import Map from "./components/map";
+import Appbar from './components/controls/Appbar'
 
 function App() {
   return (
     <div className="App">
       <div className="side">
         <div className="control">
-          <Goal />
-          <Year />
+          {/* <Goal />
+          <Year /> */}
+          <Appbar />
         </div>
         <Chart />
       </div>

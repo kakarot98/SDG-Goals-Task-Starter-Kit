@@ -12,8 +12,9 @@
 }
 
 .control {
-  background: rgb(250, 217, 223);
-  padding: 20px;
+  border-top: 5px;
+  border-bottom: 5px;
+  padding-bottom: 5px;
   display: flex;
 }
 
@@ -35,8 +36,8 @@
 
 .goal,
 .year {
-  width: 50%;
-  margin: 10px;
+  width: 100%;
+  margin: 5px;
 }
 
 .side select {
