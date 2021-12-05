@@ -23,7 +23,48 @@ export const setChart = (chartDataValues) => ({
 const initialState = {
     year: undefined,
     goal: undefined,
-    chartDataValues: undefined
+    chartDataValues: undefined,
+    states: {
+        "Andhra Pradesh": "IND028",
+        "Arunachal Pradesh": "IND012",
+        "Assam":"IND018",
+        "Bihar":"IND010",
+        "Chhattisgarh":"IND022",
+        "Goa":"IND030",
+        "Gujarat":"IND024",
+        "Haryana":"IND006",
+        "Himachal Pradesh": "IND002",
+        "Jharkhand":"IND020",
+        "Karnataka": "IND029",
+        "Kerala":"IND032",
+        "Madhya Pradesh":"IND023",
+        "Maharashtra":"IND027",
+        "Manipur":"IND014",
+        "Meghalaya":"IND017",
+        "Mizoram":"IND015",
+        "Nagaland":"IND013",
+        "Odisha":"IND021",
+        "Punjab":"IND003",
+        "Rajasthan":"IND008",
+        "Sikkim":"IND011",
+        "Tamil Nadu":"IND033",
+        "Telangana":"IND036",
+        "Tripura":"IND016",
+        "Uttar Pradesh":"IND009",
+        "Uttarakhand":"IND005",
+        "West Bengal":"IND019"
+    },
+    unionTerritories : {
+        "Andaman and Nicobar Islands": "IND035",
+        "Chandigarh": "IND004",
+        "Dadra and Nagar Haveli":"IND026",
+        "Daman and Diu":"IND025",
+        "Delhi": "IND007",
+        "Jammu and Kashmir": "IND001",
+        "Ladakh": "IND037",
+        "Lakshadweep":"IND031",
+        "Puducherry":"IND034",
+    }
 }
 
 export default (state=initialState, action) => {

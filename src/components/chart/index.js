@@ -8,6 +8,7 @@ import OutlinedCard from "./card";
 export default function Chart() {
   const dispatch = useDispatch();
   const d3Chart = useRef();
+  
 
   //can get multiple state values with useselector but component will re-render everytime a part of state changes
   // const [year, goal] = useSelector((state) => [
@@ -90,6 +91,7 @@ export default function Chart() {
       .enter()
       .append("g")
       .attr("transform", "translate(0," + chartHeight + ")")
+      .transition()
       .call(
         d3
           .axisBottom(xScale)
@@ -108,6 +110,7 @@ export default function Chart() {
       .enter()
       .append("g")
       .attr("transform", "translate(" + margin.left + ", 0)")
+      .transition()
       .call(d3.axisLeft(yScale));
 
     selection
