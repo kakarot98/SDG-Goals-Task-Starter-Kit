@@ -3,6 +3,8 @@ import ReactTooltip from "react-tooltip";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { scaleQuantile } from "d3-scale";
+import { setMap } from "../redux/ducks/chartData";
+import axios from 'axios'
 
 //for some styling part
 const COLOR_RANGE = [
@@ -41,17 +43,46 @@ const PROJECTION_CONFIG = {
 const INDIA_TOPO_JSON = require("./india.topo.json");
 
 export default function Map() {
-  const chartDataValues = useSelector(
-    (state) => state.chartData.chartDataValues
+
+  const dispatch = useDispatch()
+
+  const year = useSelector((state) => state.chartData.year);
+  const goal = useSelector((state) => state.chartData.goal);
+  const mapDataValues = useSelector(
+    (state) => state.chartData.mapDataValues
   );
+
+  useEffect(() => {
+    if (year && goal) {
+      const fetchData = async (year) => {
+        await axios
+          .get(`${year}.json`)
+          .then((res) => {
+            dispatch(
+              setMap(
+                res.data.map((e, i) => {
+                  return {
+                    area_name: e.area_name,
+                    value: e.chartdata.filter((obj) => obj.name === goal)[0]
+                      .value
+                  };
+                })
+              )
+            );
+          })
+          .catch((err) => console.log(err));
+      };
+      fetchData(year);
+    }
+  }, [year, goal, dispatch]);
 
   const [colorScale, setColorScale] = useState(null);
 
   useEffect(() => {
-    if (chartDataValues) {
+    if (mapDataValues) {
       setColorScale(() =>
         scaleQuantile()
-          .domain(chartDataValues.map((d) => d.value))
+          .domain(mapDataValues.map((d) => d.value))
           .range(COLOR_RANGE)
       );
     } else {
@@ -59,7 +90,7 @@ export default function Map() {
         return null;
       });
     }
-  }, [chartDataValues]);
+  }, [mapDataValues]);
 
   const [tooltipContent, setTooltipContent] = useState("");
 
@@ -73,7 +104,7 @@ export default function Map() {
     };
   };
 
-  return chartDataValues ? (
+  return mapDataValues ? (
     <div>
       <ReactTooltip>{tooltipContent}</ReactTooltip>
       <ComposableMap
@@ -86,7 +117,7 @@ export default function Map() {
         <Geographies geography={INDIA_TOPO_JSON}>
           {({ geographies }) =>
             geographies.map((geo) => {
-              const current = chartDataValues.find(
+              const current = mapDataValues.find(
                 (s) => s.area_name === geo.properties.name
               );
               return (

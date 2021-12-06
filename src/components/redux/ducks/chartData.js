@@ -2,6 +2,7 @@
 const SET_YEAR = "SET_YEAR"
 const SET_GOAL = "SET_GOAL"
 const SET_CHART = "SET_CHART"
+const SET_MAP = "SET_MAP"
 
 //actions
 export const setYear =(year)=>({
@@ -13,6 +14,12 @@ export const setGoal = (goal) => ({
     type: SET_GOAL,
     goal
 })
+
+export const setMap = (mapDataValues) => ({
+    type: SET_MAP,
+    mapDataValues
+})
+
 
 export const setChart = (chartDataValues) => ({
     type: SET_CHART,
@@ -80,6 +87,10 @@ export default (state=initialState, action) => {
         case SET_CHART:
             console.log(action.chartDataValues)
             return action.chartDataValues = undefined ? state : {...state, chartDataValues: action.chartDataValues}
+
+        case SET_MAP:
+            console.log(action.mapDataValues)
+            return action.mapDataValues = undefined ? state : {...state, mapDataValues: action.mapDataValues}
 
         default:
             return state
