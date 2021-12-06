@@ -3,7 +3,6 @@ import {Toolbar, Button} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Goal from "./goal";
 import Year from "./year";
-import Filters from './filters'
 
 const Appbar = () => {
   return (
@@ -11,7 +10,6 @@ const Appbar = () => {
       <Toolbar>
         <Goal />
         <Year />
-        <Filters />
       </Toolbar>
     </AppBar>
   );

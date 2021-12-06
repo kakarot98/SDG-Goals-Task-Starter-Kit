@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setChart } from "../redux/ducks/chartData";
 import OutlinedCard from "./card";
+import Filters from "./filters";
 
 export default function Chart() {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ export default function Chart() {
   const chartDataValues = useSelector(
     (state) => state.chartData.chartDataValues
   );
+  const [dataToDisplay, setDataToDisplay] = useState(null)
+  const [filter, setFilter] = useState('STATE')
 
   useEffect(() => {
     if (year && goal) {
@@ -32,8 +35,7 @@ export default function Chart() {
                 res.data.map((e, i) => {
                   return {
                     area_name: e.area_name,
-                    value: e.chartdata.filter((obj) => obj.name === goal)[0]
-                      .value
+                    value: e.chartdata.filter((obj) => obj.name === goal)[0].value                      
                   };
                 })
               )
@@ -44,6 +46,7 @@ export default function Chart() {
       fetchData(year);
     }
   }, [year, goal, dispatch]);
+
 
   const drawChart = (data) => {
     d3.select(d3Chart.current).selectAll("svg").remove();
@@ -109,7 +112,7 @@ export default function Chart() {
     selection
       .enter()
       .append("g")
-      .attr("fill", "royalblue")
+      .attr("fill", ()=>{ return  filter == "STATE" ? "royalblue" : "purple"})
       .selectAll("rect")
       .data(data)
       .join("rect")
@@ -124,14 +127,17 @@ export default function Chart() {
   };
 
   useEffect(() => {
-    if (chartDataValues) {
-      drawChart(chartDataValues);
+    if (chartDataValues && dataToDisplay) {
+      drawChart(dataToDisplay);
     }
-  }, [chartDataValues]);
+  }, [dataToDisplay]);
 
   return (
-    <div style={{ height: "100%", width: "100%" }} className="chart" id="chart">
-      {chartDataValues ? (
+    <div style={{ height: "100%", width: "100%", display:"flex", flexDirection:"column", marginTop:"25px" }} className="chart" id="chart">
+      <div>
+      <Filters filter={filter} setFilter={setFilter} chartDataValues={chartDataValues} dataToDisplay={dataToDisplay} setDataToDisplay={setDataToDisplay}/>
+      </div>
+      {chartDataValues && dataToDisplay ? (
         <div ref={d3Chart} style={{ height: "100%", width: "100%" }}></div>
       ) : (
         <OutlinedCard />
