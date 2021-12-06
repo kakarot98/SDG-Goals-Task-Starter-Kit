@@ -1,21 +1,18 @@
 import "./app.css";
 import Chart from "./components/chart";
 import Map from "./components/map";
-import Appbar from './components/controls/Appbar'
+import Appbar from "./components/controls/Appbar";
+import { Container, Box } from "@mui/material";
 
 function App() {
   return (
-    <div className="App">
-      <div className="side">
-        <div className="control">
-          {/* <Goal />
-          <Year /> */}
-          <Appbar />
-        </div>
+    <Container maxWidth={false} sx={{ padding: 0 }}>
+      <Appbar />
+      <Box sx={{ width: "100vw", height: "700px" }}>
         <Chart />
-      </div>
+      </Box>
       <Map />
-    </div>
+    </Container>
   );
 }
 

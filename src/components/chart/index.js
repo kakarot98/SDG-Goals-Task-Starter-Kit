@@ -8,7 +8,6 @@ import OutlinedCard from "./card";
 export default function Chart() {
   const dispatch = useDispatch();
   const d3Chart = useRef();
-  
 
   //can get multiple state values with useselector but component will re-render everytime a part of state changes
   // const [year, goal] = useSelector((state) => [
@@ -47,18 +46,12 @@ export default function Chart() {
   }, [year, goal, dispatch]);
 
   const drawChart = (data) => {
-    
     d3.select(d3Chart.current).selectAll("svg").remove();
 
     const margin = { top: 50, right: 20, bottom: 30, left: 40 };
 
-    const chartWidth =
-      parseInt(d3.select("#chart").style("width")) - margin.left - margin.right;
-
-    const chartHeight =
-      parseInt(d3.select("#chart").style("height")) -
-      margin.top -
-      margin.bottom;
+    const chartWidth = 1000;
+    const chartHeight = 600;
 
     const svg = d3
       .select(d3Chart.current)
@@ -128,20 +121,18 @@ export default function Chart() {
       .attr("width", xScale.bandwidth());
 
     selection.exit().remove();
-  }
+  };
 
   useEffect(() => {
     if (chartDataValues) {
-      drawChart(chartDataValues)
-      
+      drawChart(chartDataValues);
     }
   }, [chartDataValues]);
 
-  
   return (
-    <div className="chart" id="chart">
+    <div style={{ height: "100%", width: "100%" }} className="chart" id="chart">
       {chartDataValues ? (
-        <div ref={d3Chart}></div>
+        <div ref={d3Chart} style={{ height: "100%", width: "100%" }}></div>
       ) : (
         <OutlinedCard />
       )}
