@@ -8,7 +8,7 @@ function App() {
   return (
     <Container maxWidth={false} sx={{ padding: 0 }}>
       <Appbar />
-      <Box sx={{ width: "100vw", height: "700px" }}>
+      <Box sx={{ width: "100vw", height: "700px", alignItems:"center", justifyContent:"center" }}>
         <Chart />
       </Box>
       <Map />

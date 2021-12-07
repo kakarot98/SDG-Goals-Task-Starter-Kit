@@ -20,8 +20,8 @@ export default function Chart() {
   const chartDataValues = useSelector(
     (state) => state.chartData.chartDataValues
   );
-  const [dataToDisplay, setDataToDisplay] = useState(null)
-  const [filter, setFilter] = useState('STATE')
+  const [dataToDisplay, setDataToDisplay] = useState(null);
+  const [filter, setFilter] = useState("STATE");
 
   useEffect(() => {
     if (year && goal) {
@@ -35,7 +35,8 @@ export default function Chart() {
                 res.data.map((e, i) => {
                   return {
                     area_name: e.area_name,
-                    value: e.chartdata.filter((obj) => obj.name === goal)[0].value                      
+                    value: e.chartdata.filter((obj) => obj.name === goal)[0]
+                      .value,
                   };
                 })
               )
@@ -46,7 +47,6 @@ export default function Chart() {
       fetchData(year);
     }
   }, [year, goal, dispatch]);
-
 
   const drawChart = (data) => {
     d3.select(d3Chart.current).selectAll("svg").remove();
@@ -62,7 +62,6 @@ export default function Chart() {
       .append("svg")
       .attr("width", chartWidth + margin.left + margin.right)
       .attr("height", chartHeight + margin.top + margin.bottom)
-      .style("border", "1px solid black")
       .style("overflow", "visible");
 
     var selection = svg.selectAll("rect").data(data);
@@ -112,7 +111,9 @@ export default function Chart() {
     selection
       .enter()
       .append("g")
-      .attr("fill", ()=>{ return  filter == "STATE" ? "royalblue" : "purple"})
+      .attr("fill", () => {
+        return filter == "STATE" ? "royalblue" : "purple";
+      })
       .selectAll("rect")
       .data(data)
       .join("rect")
@@ -133,9 +134,25 @@ export default function Chart() {
   }, [dataToDisplay]);
 
   return (
-    <div style={{ height: "100%", width: "100%", display:"flex", flexDirection:"column", marginTop:"25px" }} className="chart" id="chart">
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        marginTop: "25px",
+      }}
+      className="chart"
+      id="chart"
+    >
       <div>
-      <Filters filter={filter} setFilter={setFilter} chartDataValues={chartDataValues} dataToDisplay={dataToDisplay} setDataToDisplay={setDataToDisplay}/>
+        <Filters
+          filter={filter}
+          setFilter={setFilter}
+          chartDataValues={chartDataValues}
+          dataToDisplay={dataToDisplay}
+          setDataToDisplay={setDataToDisplay}
+        />
       </div>
       {chartDataValues && dataToDisplay ? (
         <div ref={d3Chart} style={{ height: "100%", width: "100%" }}></div>
